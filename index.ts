@@ -57,6 +57,15 @@ io.on('connection', (socket) => {
         socket.broadcast.to(data.roomId).emit('call_end', data);
     })
 
+    socket.on("call_rejected", (data) => {
+        console.log("call_rejected", data);
+        socket.broadcast.to(data.roomId).emit('call_rejected', data);
+    })
+
+    socket.on("call_end", (data) => {
+        io.to(data.roomId).emit("call_end");  // broadcasts to both users in the room
+    });
+
 
 
     socket.on('disconnect', () => {
